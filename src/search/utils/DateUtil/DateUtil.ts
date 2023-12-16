@@ -19,7 +19,7 @@ export class DateUtil {
     this.diffDates(dateFormatCheckin, dateFormatCheckout);
   }
 
-  private static diffDates(checkin: Date, checkout: Date) {
+  static diffDates(checkin: Date, checkout: Date) {
     if (checkin > checkout) {
       throw new BadRequestException(
         'checkin date is higher than checkout date',

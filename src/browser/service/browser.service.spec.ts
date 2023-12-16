@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { BrowserService } from './browser.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 
 describe('BrowserService', () => {
   let browserService: BrowserService;
   let configService: ConfigService;
+  let browser;
+  const mockCheckin = '10-12-2023';
+  const mockCheckout = '15-12-2023';
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,12 +20,8 @@ describe('BrowserService', () => {
     browserService = module.get<BrowserService>(BrowserService);
     configService = module.get<ConfigService>(ConfigService);
   });
-  beforeEach(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
 
-  it('Method buildURL should be able to create a URL with dates', async () => {
-    const mockCheckin = '10-12-2023';
-    const mockCheckout = '15-12-2023';
+  it('should be able to create a URL with dates', async () => {
     const URL = browserService.buildURL(mockCheckin, mockCheckout);
 
     expect(URL).toBeDefined();
@@ -32,10 +32,30 @@ describe('BrowserService', () => {
   it('should be able to return browser and page', async () => {
     jest.spyOn(puppeteer, 'launch');
     jest.spyOn(browserService, 'getBrowserInfo');
+    const result = await browserService.getBrowser(
+      'mock_checkin',
+      'mockCheckout',
+    );
+    expect(browserService.getBrowserInfo).toHaveBeenCalledTimes(1);
+    expect(puppeteer.launch).toHaveBeenCalledTimes(1);
+    expect(result).toHaveProperty('browser');
+    expect(result).toHaveProperty('page');
+  }, 25000);
 
-    await browserService.getBrowser('mock_checkin', 'mockCheckout');
+  // it('should be able to return browser and page', async () => {
+  //   jest
+  //     .spyOn(browserService, 'buildURL')
+  //     .mockImplementationOnce(() => 'mockURL');
 
-    expect(browserService.getBrowserInfo).toHaveBeenCalled();
-    // await expect(browser).toHaveBeenCalled();
-  }, 10);
+  //   // const page = jest.fn(browser.newPage());
+  //   const result = await browserService.getBrowserInfo(
+  //     'mock_url' as unknown as Browser,
+  //     mockCheckin,
+  //     mockCheckout,
+  //   );
+  //   expect(browserService.getBrowserInfo).toHaveBeenCalled();
+  //   expect(puppeteer.launch).toHaveBeenCalled();
+  //   expect(result).toHaveProperty('browser');
+  //   expect(result).toHaveProperty('page');
+  // }, 20000);
 });

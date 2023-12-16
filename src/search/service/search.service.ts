@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { SearchRoomsOptionsDto } from '../dto/search-rooms-options-dto';
-import { BrowserService } from 'src/browser/service/browser.service';
+import { BrowserService } from '../../browser/service/browser.service';
 import { Page } from 'puppeteer';
 import { roomParams } from '../utils/room-params';
 import { IRoom } from '../interface/IRoom';

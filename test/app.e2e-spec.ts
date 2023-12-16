@@ -15,10 +15,10 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/search (POST)', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
+      .post('/search')
+      .send({ checkin: '2023-12-12', checkout: '2023-12-15' })
+      .expect(200);
+  }, 100000);
 });
