@@ -5,7 +5,6 @@ import { Page } from 'puppeteer';
 import { roomParams } from '../utils/room-params';
 import { IRoom } from '../interface/IRoom';
 import { DateUtil } from '../utils/DateUtil/DateUtil';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class SearchService {
