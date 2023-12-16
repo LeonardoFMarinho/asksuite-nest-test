@@ -5,6 +5,7 @@ import { Page } from 'puppeteer';
 import { roomParams } from '../utils/room-params';
 import { IRoom } from '../interface/IRoom';
 import { DateUtil } from '../utils/DateUtil/DateUtil';
+import { warnParam } from '../utils/warn-param';
 
 @Injectable()
 export class SearchService {
@@ -51,37 +52,38 @@ export class SearchService {
   }
 
   async mappingRooms(page: Page): Promise<IRoom[]> {
-    const response = await page.evaluate(async (parameters) => {
-      const messageError = document.querySelector(
-        '#q-portal--dialog--1 > div > div.q-dialog__inner.flex.no-pointer-events.q-dialog__inner--minimized.q-dialog__inner--standard.fixed-full.flex-center > div > div > p.lb-text__body-1.lb-text__weight-4.lb-text.warning',
-      )?.textContent;
-      if (messageError) {
-        return messageError;
-      }
+    const response = await page.evaluate(
+      async ({ roomParams, warnParam }) => {
+        const messageError = document.querySelector(warnParam)?.textContent;
+        if (messageError) {
+          return messageError;
+        }
 
-      const roomOptions = [];
+        const roomOptions = [];
 
-      const rooms = document.querySelectorAll(
-        '#main-layout > div.q-page-container > main > article > div.room-list > span > div.room-option-wrapper',
-      );
-      const regex = /https(.*?\.jpg)/;
+        const rooms = document.querySelectorAll(
+          '#main-layout > div.q-page-container > main > article > div.room-list > span > div.room-option-wrapper',
+        );
+        const regex = /https(.*?\.jpg)/;
 
-      for (const room of rooms) {
-        const availableRoom = {
-          name: room.querySelector(parameters.name)?.textContent,
-          description: room.querySelector(parameters.description)?.textContent,
-          price: room.querySelector(parameters.price)?.textContent,
-          image: room
-            ?.querySelector(parameters.image)
-            ?.getAttribute('style')
-            ?.match(regex)[0],
-        };
-        roomOptions.push(availableRoom);
-      }
-      return roomOptions;
-    }, roomParams);
+        for (const room of rooms) {
+          const availableRoom = {
+            name: room.querySelector(roomParams.name)?.textContent,
+            description: room.querySelector(roomParams.description)
+              ?.textContent,
+            price: room.querySelector(roomParams.price)?.textContent,
+            image: room
+              ?.querySelector(roomParams.image)
+              ?.getAttribute('style')
+              ?.match(regex)[0],
+          };
+          roomOptions.push(availableRoom);
+        }
+        return roomOptions;
+      },
+      { roomParams, warnParam },
+    );
     if (typeof response == 'string') {
-      this.logger.verbose(`${response}`);
       throw new BadRequestException(`${response}`);
     }
     return response;
