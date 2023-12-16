@@ -11,7 +11,7 @@ export class DateUtil {
 
   static validateDatesPayload({ checkin, checkout }) {
     if (!checkin || !checkout) {
-      throw new BadRequestException("Chechin and chackout can't be empty");
+      throw new BadRequestException("Checkin and checkout can't be empty");
     }
     const dateFormatCheckin = DateUtil.validateDate(checkin);
     const dateFormatCheckout = DateUtil.validateDate(checkout);
