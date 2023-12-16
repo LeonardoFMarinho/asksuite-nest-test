@@ -1,73 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Test Dev Asksuite
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Hey! Glad you're here.
+I'm going to explain exactly what you'll have to implement in this test and what we expect as outcome.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+First of all, we have this nice express.js boilerplate project to assist you so you don't have to create everything from scratch.
 
-## Description
+## Briefing
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The traveller comes to our bot and asks for "Price quotation". Then the bot asks for the dates the traveller wants to
+stay at the bot's hotel.
+At the moment the traveller fills the requested information the bot needs to search the prices for each room available in the check-in/check-out
+timeframe.
 
-## Installation
+You will have to implement the API responsible for doing the searching part.
+The necessary information for the crawler is under the [Assets](#assets) session
 
-```bash
-$ npm install
-```
+## What you'll need to do:
 
-## Running the app
+- Create a POST endpoint "/search"
+  - The expected payload is:
 
-```bash
-# development
-$ npm run start
+      <pre>
+      {
+          "checkin": "YYYY-MM-DD", // Check-in date
+          "checkout": "YYYY-MM-DD" // Check-out date
+      }
+      </pre>
 
-# watch mode
-$ npm run start:dev
+    Example
 
-# production mode
-$ npm run start:prod
-```
+      <pre>
+      {
+          "checkin": "2021-07-01", 
+          "checkout": "2021-07-03"
+      }
+      </pre>
 
-## Test
+  - The expected result is an array of rooms:
 
-```bash
-# unit tests
-$ npm run test
+      <pre>
+      [{
+          "name": string, // Room name
+          "description": string,  // Room description
+          "price": string, // Room daily price
+          "image": string, // Room main photo
+      }]
+      </pre>
 
-# e2e tests
-$ npm run test:e2e
+    Example
 
-# test coverage
-$ npm run test:cov
-```
+      <pre>
+      [{
+          "name": "STUDIO CASAL",
+          "description": "Apartamentos localizados no prÃ©dio principal do Resort, prÃ³ximos a recepÃ§Ã£o e a Ã¡rea de convivÃªncia, com vista para Ã¡rea de estacionamento nÃ£o possuem varanda. Acomoda atÃ© 1 adulto e 1 crianÃ§a ou 2 adultos", 
+          "price": "R$ 1.092,00",
+          "image": "https://letsimage.s3.amazonaws.com/letsbook/193/quartos/30/fotoprincipal.jpg"
+      },
+      {
+          "name": "CABANA",
+          "description": "Apartamentos espalhados pelos jardins do Resort, com vista jardim possuem varanda. Acomoda atÃ© 4 adultos ou 3 adultos e 1 crianÃ§a ou 2 adultos e 2 crianÃ§a ou 1 adulto e 3 crianÃ§as, em duas camas casal.", 
+          "price": "R$ 1.321,00",
+          "image": "https://letsimage.s3.amazonaws.com/letsbook/193/quartos/32/fotoprincipal.jpg"
+      }]
+      </pre>
 
-## Support
+To achieve this result you may:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- With puppeteer, go to the [given URL](#assets)
+- Retrieve the needed information to assemble the payload using web crawling methods
 
-## Stay in touch
+## Environment
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Node 10+
+- Dotenv setup
 
-## License
+Already installed: `express` `puppeteer` `dotenv`
 
-Nest is [MIT licensed](LICENSE).
+**_Feel free to add any lib you find relevant to your test._**
+
+## Running
+
+- Install dependencies with: `npm install`
+- Run as dev: `npm run dev`
+
+Default port is set to `8080`
+
+## Assets
+
+- Crawl URL sample (change dates):
+<pre>https://pratagy.letsbook.com.br/D/Reserva?checkin=21%2F06%2F2022&checkout=25%2F06%2F2022&cidade=&hotel=12&adultos=2&criancas=&destino=Pratagy+Beach+Resort+All+Inclusive&promocode=&tarifa=&mesCalendario=6%2F14%2F2022</pre>
+- Help images:
+  ![sample_1](assets/sample_1.png)
+
+## Test rating
+
+What do we evaluate with this test?
+
+- Dev's capacity of:
+  - Self-learning
+  - Working with node
+  - Understanding an existent project
+- Dev's code quality:
+  - Clear and maintainable code
+  - Coding structure
+  - Changes that don't break easily

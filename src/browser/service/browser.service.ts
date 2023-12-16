@@ -21,10 +21,6 @@ export class BrowserService {
     checkin: string,
     checkout: string,
   ): Promise<Page> {
-    this.logger.verbose(
-      `Start scrapping to list rooms available between ${checkin} and ${checkout}`,
-    );
-
     const page = await browser.newPage();
 
     const URL = this.buildURL(checkin, checkout);
