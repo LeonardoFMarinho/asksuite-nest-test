@@ -14,18 +14,18 @@ export class SearchService {
 
   async search({ checkin, checkout }: SearchRoomsOptionsDto): Promise<IRoom[]> {
     DateUtil.validateDatesPayload({ checkin, checkout });
-
     const { checkinValidated, checkoutValidated } = DateUtil.formatDate(
       checkin,
       checkout,
     );
+
     try {
       const { browser, page } = await this.browserService.getBrowser(
         checkinValidated,
         checkoutValidated,
       );
       this.logger.verbose(
-        `Start scrapping to list rooms available between ${checkin} and ${checkout}`,
+        `Start scrapping to list rooms available between ${checkinValidated} and ${checkoutValidated}`,
       );
       const result = await this.mappingRooms(page);
 
@@ -42,7 +42,7 @@ export class SearchService {
 
       await browser.close();
 
-      this.logger.log('END search Service');
+      this.logger.verbose('END search Service');
       return result;
     } catch (error) {
       this.logger.error(`Error message: ${error?.message}`);
@@ -72,7 +72,6 @@ export class SearchService {
       }
       return roomOptions;
     }, roomParams);
-
     return roomsFound;
   }
 }

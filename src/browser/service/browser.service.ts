@@ -34,7 +34,6 @@ export class BrowserService {
       .replace('payload_checkin', checkin)
       .replace('payload_checkout', checkout);
     this.logger.verbose(`The URL was created successfully ${URL}`);
-
     return URL;
   }
 }
