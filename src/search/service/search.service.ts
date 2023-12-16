@@ -5,6 +5,7 @@ import { Page } from 'puppeteer';
 import { roomParams } from '../utils/room-params';
 import { IRoom } from '../interface/IRoom';
 import { DateUtil } from '../utils/DateUtil/DateUtil';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class SearchService {
@@ -51,8 +52,16 @@ export class SearchService {
   }
 
   async mappingRooms(page: Page): Promise<IRoom[]> {
-    const roomsFound = await page.evaluate(async (parameters) => {
+    const response = await page.evaluate(async (parameters) => {
+      const messageError = document.querySelector(
+        '#q-portal--dialog--1 > div > div.q-dialog__inner.flex.no-pointer-events.q-dialog__inner--minimized.q-dialog__inner--standard.fixed-full.flex-center > div > div > p.lb-text__body-1.lb-text__weight-4.lb-text.warning',
+      )?.textContent;
+      if (messageError) {
+        return messageError;
+      }
+
       const roomOptions = [];
+
       const rooms = document.querySelectorAll(
         '#main-layout > div.q-page-container > main > article > div.room-list > span > div.room-option-wrapper',
       );
@@ -72,6 +81,10 @@ export class SearchService {
       }
       return roomOptions;
     }, roomParams);
-    return roomsFound;
+    if (typeof response == 'string') {
+      this.logger.verbose(`${response}`);
+      throw new BadRequestException(`${response}`);
+    }
+    return response;
   }
 }
