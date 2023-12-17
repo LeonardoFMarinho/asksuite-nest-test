@@ -18,6 +18,7 @@ The necessary information for the crawler is under the [Assets](#assets) session
 ## What you'll need to do:
 
 - Create a POST endpoint "/search"
+
   - The expected payload is:
 
       <pre>
@@ -104,3 +105,26 @@ What do we evaluate with this test?
   - Clear and maintainable code
   - Coding structure
   - Changes that don't break easily
+
+## Informações sobre aplicação já desenvolvida
+
+    - Aplicação foi desenvolvida segundo os criteios de aceite. Para o desenvolvimento da API foi utilizado o Nestjs ( Node v18.10.0 e Typescript ), Jest, validação de payloaod e formato de data com o class-validator.
+
+## Execução da aplicação
+
+    - A aplicação pode ser executada no embiente local ou via docker
+        - Antes de executar no docker, certifique-se que o docker está devidamente instalado na sua maquina
+        - Para executar a aplicação via docker, basta apenas executar o comando "docker compose up" e aguardar o container carregar completamente, após isso, a rota (/search , POST) desenvolvida estará disponivel na porta 8080, podendo ser executada no http://localhost:8080/search
+
+        - É importante garantir antes da execução local que você possua na maquina os pré requesitos para o funcionamento da mesma ( Node devidamente instalado )
+        - Para executar a aplicação localmente, após a instalação das dependencias (comando "npm i" ou "yarn", dependendo do gerenciador de pacotes que você está utilizando) basta utilizar o comando "npm run start" e aguardar o carregamento da API, após isso, a rota desenvolvida estará disponivel na porta 8080, podendo ser executada no http://localhost:8080/search
+
+## Documentação
+
+    - A documentação foi desenvolvida com o Swagger. Estará disponivel para realização de execução de chamada na rota após a execução da API no endereço: http://localhost:8080/api
+    - Caso seja de preferencia do avaliador, o endpoint estará disponivel via arquivo gerado pelo insomnia na raiz do projeto ( arquivo : Insomnia-ask-suite )
+
+## Testes
+
+    - Os testes poderão ser executados com o comando "npm run test"
+    - O teste e2e poderá ser executado com o comando "npm run test:e2e"
