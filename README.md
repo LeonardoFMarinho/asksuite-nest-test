@@ -106,9 +106,9 @@ What do we evaluate with this test?
   - Coding structure
   - Changes that don't break easily
 
-## Informações sobre aplicação já desenvolvida
+## Informações sobre aplicação desenvolvida
 
-    - Aplicação foi desenvolvida segundo os criteios de aceite. Para o desenvolvimento da API foi utilizado o Nestjs ( Node v18.10.0 e Typescript ), Jest, validação de payloaod e formato de data com o class-validator.
+    - Aplicação foi desenvolvida segundo os criteios de aceite. Para o desenvolvimento da API foi utilizado o Nestjs ( Node v18.10.0 e Typescript ), Jest, validação de payloaod e formato de data com o class-validator, docker, swagger e  puppeteer
 
 ## Execução da aplicação
 
