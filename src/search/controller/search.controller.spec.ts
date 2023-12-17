@@ -43,9 +43,8 @@ describe('AppController (e2e)', () => {
       .spyOn(searchService, 'search')
       .mockImplementationOnce(async () => mockRepsonse);
 
-    const result = await searchController.search(payload);
-    expect(result[0].name).toBeDefined();
-    expect(result.length).toBe(1);
+    const [result] = await searchController.search(payload);
+    expect(result.name).toBeDefined();
   });
 
   it('/search - fail -(POST)', async () => {

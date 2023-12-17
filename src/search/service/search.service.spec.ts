@@ -56,15 +56,14 @@ describe('SearchService', () => {
         return mockRoomList;
       });
 
-    const result = await searchService.mappingRooms(
+    const [result] = await searchService.mappingRooms(
       'mock_page' as unknown as Page,
     );
 
-    expect(result.length).toBe(1);
-    expect(result[0]).toHaveProperty('name');
-    expect(result[0]).toHaveProperty('price');
-    expect(result[0]).toHaveProperty('image');
-    expect(result[0]).toHaveProperty('description');
+    expect(result).toHaveProperty('name');
+    expect(result).toHaveProperty('price');
+    expect(result).toHaveProperty('image');
+    expect(result).toHaveProperty('description');
   }, 20000);
 
   it('should be able return an error if there are no options in the room list', async () => {
