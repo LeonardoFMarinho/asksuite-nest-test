@@ -21,6 +21,6 @@ describe('AppController (e2e)', () => {
     return await request(app.getHttpServer())
       .post('/search')
       .send({ checkin: '2024-02-18', checkout: '2024-02-28' })
-      .expect(201);
+      .expect(200);
   }, 100000);
 });

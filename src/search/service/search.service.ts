@@ -68,10 +68,10 @@ export class SearchService {
 
         for (const room of rooms) {
           const availableRoom = {
-            name: room.querySelector(roomParams.name)?.textContent,
-            description: room.querySelector(roomParams.description)
+            name: room?.querySelector(roomParams.name)?.textContent,
+            description: room?.querySelector(roomParams.description)
               ?.textContent,
-            price: room.querySelector(roomParams.price)?.textContent,
+            price: room?.querySelector(roomParams.price)?.textContent,
             image: room
               ?.querySelector(roomParams.image)
               ?.getAttribute('style')
