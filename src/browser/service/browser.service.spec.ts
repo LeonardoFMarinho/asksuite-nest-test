@@ -41,21 +41,4 @@ describe('BrowserService', () => {
     expect(result).toHaveProperty('browser');
     expect(result).toHaveProperty('page');
   }, 25000);
-
-  // it('should be able to return browser and page', async () => {
-  //   jest
-  //     .spyOn(browserService, 'buildURL')
-  //     .mockImplementationOnce(() => 'mockURL');
-
-  //   // const page = jest.fn(browser.newPage());
-  //   const result = await browserService.getBrowserInfo(
-  //     'mock_url' as unknown as Browser,
-  //     mockCheckin,
-  //     mockCheckout,
-  //   );
-  //   expect(browserService.getBrowserInfo).toHaveBeenCalled();
-  //   expect(puppeteer.launch).toHaveBeenCalled();
-  //   expect(result).toHaveProperty('browser');
-  //   expect(result).toHaveProperty('page');
-  // }, 20000);
 });
