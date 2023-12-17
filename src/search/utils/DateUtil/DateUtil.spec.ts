@@ -20,13 +20,4 @@ describe('Date Util', () => {
 
     expect(result.checkinValidated).toBe('12-12-2023');
   });
-
-  //   it('shoud be able to reject checkin date higher checkout', async () => {
-  //     const checkin = new Date('2023-12-16');
-  //     const checkout = new Date('2023-12-15');
-
-  //     await expect(DateUtil.diffDates(checkin, checkout)).rejects.toBeInstanceOf(
-  //       BadRequestException,
-  //     );
-  //   });
 });
