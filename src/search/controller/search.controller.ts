@@ -3,7 +3,7 @@ import { SearchRoomsOptionsDto } from '../dto/search-rooms-options-dto';
 import { SearchService } from '../service/search.service';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('scrapping')
+@ApiTags('Web crawling')
 @Controller()
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}

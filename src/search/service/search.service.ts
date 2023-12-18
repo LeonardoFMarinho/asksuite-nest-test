@@ -26,7 +26,7 @@ export class SearchService {
         checkoutValidated,
       );
       this.logger.verbose(
-        `Start scrapping to list rooms available between ${checkinValidated} and ${checkoutValidated}`,
+        `Start web crawling to list rooms available between ${checkinValidated} and ${checkoutValidated}`,
       );
       const result = await this.mappingRooms(page);
 
