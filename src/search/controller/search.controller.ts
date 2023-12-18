@@ -1,8 +1,9 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { SearchRoomsOptionsDto } from '../dto/search-rooms-options-dto';
 import { SearchService } from '../service/search.service';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('scrapping')
 @Controller()
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
